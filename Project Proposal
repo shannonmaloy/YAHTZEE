@@ -1,0 +1,25 @@
+*** Shannon Maloy / 7/19/2020 ***
+
+# [Name of Game] Proposal
+
+## What is [name of game]?
+
+I would like to make the game of Yahtzee.  I think it will be challenging and fun.  It has dice that must be rolled and scoring that must be decided by the players.
+
+## Wireframe
+
+PDF File
+
+## Initial thoughts on game structure
+
+Figuring out the logic for the scoring.  For example, if a player rolls a full house (3 of a kind and 2 of a kind), it's scored as a 25, but you could also score that as you 3's which would be the sum of all 3's.  The scoring has many variations that I will have to map out
+
+## Phases of Completion
+
+(The steps or phases you expect to go through, and the tasks that you'll need to accomplish to reach each step. These should resemble the acceptance criteria we were working through earlier.)
+
+I feel like I should design the HTML and CSS for the game first.  I'm a little weaker in CSS so it takes me longer.  Once I have a good working HTML/CSS layout I can start to apply the game logic.  
+
+## Links and Resources
+
+Score Card Example:  http://www.linearconcepts.com/wp-content/uploads/ScoreCard.pdf
