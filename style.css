@@ -3,8 +3,20 @@ height: 100px;
 width: 100px;
 border: 3px solid black;
 font-size: 7em;
-display: flex;
+display: inline-flex;
 align-items: center;
 justify-content: center;
 cursor: pointer;
 }
+
+.dice-clicked {
+    height: 100px;
+    width: 100px;
+    border: 3px solid black;
+    font-size: 7em;
+    display: inline-flex;
+    align-items: center;
+    background-color: gray;
+    justify-content: center;
+    cursor: pointer;
+    }
