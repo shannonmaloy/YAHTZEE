@@ -30,8 +30,8 @@ function rollDice(){
     // console.log(diceRollResult, turnDiceSelection)
     })
 
-    addMatches(diceRollResult)
-    scoreParse(scoreOptions)
+    sortDiceTally(diceRollResult) //Returns scoreOptons object
+    scoreParse(scoreOptions) 
     
     
 }
@@ -54,7 +54,7 @@ dice.forEach((dice,i) => {
     })
 })
 
-function addMatches (arr){
+function sortDiceTally (arr){
     scoreOptions = {
         1: 0,
         2: 0,
@@ -69,35 +69,63 @@ function addMatches (arr){
     console.log(scoreOptions)
     return scoreOptions
 }
+//End sortDiceTall function
 
 //************************************************** */
 //Function to evaluate all scoring options based on the current dice roll
 function scoreParse (obj){
     let score = Object.values(obj)
     let straightCheck = 0
+    let sum = diceRollResult.reduce(function(a, b){
+        return a + b;
+        }, 0);
+    let scoreCardTally = {
+        1:'',
+        2:'',
+        3:'',
+        4:'',
+        5:'',
+        6:'',
+        threeOfKind:'',
+        fourOfKind:'',
+        fullHouse:'',
+        smallStraight:'',
+        largeStraight:'',
+        yahtzee: '',
+        chance: '',
+    }
     //fullHouseCheck is used for alternative method currently commented out
     // let fullHouseCheck = 0
+    score.forEach((number,index) =>{
+        scoreCardTally[index + 1] = score[index] * diceOptions[index]
+        console.log(`You can take ${score[index] * diceOptions[index]} on your ${diceOptions[index]}'s`)
+        
+    })
     
     //FOR EACH loop to check for 3, 4, and 5 of a kinds.  Did not use if/else if since 
     //a 5 of a kind can also be a 3 or 4 of a kind, a 4 of a kind can also be a 3 of a kind.
-    score.forEach((number,index) => {
+    score.forEach((number,index) => {       
         //Check for 5 of a Kind AKA Yahtzee
+        
         if (number >= 5){
             // console.log(index)
             // console.log(number)
-            console.log('5 of a kind', ((index + 1) * number))
+            scoreCardTally.yahtzee = 50
+            console.log('YAHTZEE', ((index + 1) * number))
         } 
         //Check for 4 of a kind
         if (number >= 4){
             // console.log(index)
             // console.log(number)
-            console.log('4 of a kind', ((index + 1) * number))
+            scoreCardTally.fourOfKind = sum
+            console.log('You can take a 4 of Kind', sum)
         } 
         //Check for 3 of a kind
         if (number >= 3){
             // console.log(index)
             // console.log(number)
-            console.log('3 of a kind', ((index + 1) * number))
+            scoreCardTally.threeOfKind = sum
+            console.log('You can take a 3 of Kind', sum)
         }
     })
     //Two methods for solving Full House Check
@@ -105,9 +133,10 @@ function scoreParse (obj){
         return (element > 1 && element < 4)
     }) 
     fullHouse = fullHouse.sort()
-    console.log(fullHouse,score)
+    // console.log(fullHouse,score)
     if (fullHouse[0] === 2 && fullHouse[1] === 3){
-        console.log('full house!')}
+        scoreCardTally.fullHouse = 25
+        console.log('Full House Scores 25 points')}
      // for (i = 0; i < score.length; i++){
     //     console.log("Inside Method 2", score[i])
         
@@ -120,36 +149,22 @@ function scoreParse (obj){
     //     }
     // }
     //Large and Small Straights Check
-    // console.log(score)
-    // let straightCheck = score.filter(function (element){
-    //     return (element === 1)
-    // })
-    // console.log("Straight Check: ", straightCheck.length)
-    // if (straightCheck.length === 4){
-    //     console.log('Small straight')
-    // } else if (straightCheck.length === 5){
-    //     console.log("Large Straight")
-    // }
-         // console.log('Score Index: ', score[index],' Score Index + 1: ',score[index+1])
     for (let i = 0; i < score.length - 1; i++){
         if ( score[i+1] >= 1 && score[i] >= 1){
             straightCheck += 1
         } 
     }
     if(straightCheck === 3){
-        console.log("Small straight")
+        scoreCardTally.smallStraight = 30
+        console.log("Small straight Scores 30 Points")
     } else if (straightCheck === 4){
-        console.log("Large Straight")
+        scoreCardTally.largeStraight = 40
+        console.log("Large Straight Score 40 Points")
     }
+    let chance = sum
+        scoreCardTally.chance = sum    
+    console.log(`You can take ${sum} on Chance`)
 
-
-
+    console.log("Score Card Tally:", scoreCardTally)
 }
 ///End Score Parse Function
-
-// //Straight Check
-// let diceRollResultSorted = diceRollResult.sort()
-// console.log(diceRollResultSorted)
-// for (i = 0; i < diceRollResult.length, i++){
-    
-// }
