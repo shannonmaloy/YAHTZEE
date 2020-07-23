@@ -80,19 +80,19 @@ function scoreParse (obj){
         return a + b;
         }, 0);
     let scoreCardTally = {
-        1:'',
-        2:'',
-        3:'',
-        4:'',
-        5:'',
-        6:'',
-        threeOfKind:'',
-        fourOfKind:'',
-        fullHouse:'',
-        smallStraight:'',
-        largeStraight:'',
-        yahtzee: '',
-        chance: '',
+        1:0,
+        2:0,
+        3:0,
+        4:0,
+        5:0,
+        6:0,
+        threeOfKind:0,
+        fourOfKind:0,
+        fullHouse:0,
+        smallStraight:0,
+        largeStraight:0,
+        yahtzee: 0,
+        chance: 0,
     }
     //fullHouseCheck is used for alternative method currently commented out
     // let fullHouseCheck = 0
