@@ -1,40 +1,63 @@
 console.log("JS IS CONNECTED")
+
+const sound = new Audio()
 const diceOptions = [1, 2, 3, 4, 5, 6]
 let diceRollResult = []
 let turnDiceSelection = []
+
+
+
+
+// let rotate360 = [
+//         {transform: 'rotateX(360deg) rotateY(360deg) rotateZ(360deg)'},
+//   ]
+
+//Query for the dice
 const dice = document.querySelectorAll('.dice')
-//click to roll rice
+//Query for Score Card
+const scoreBoard = document.querySelectorAll('.playerColumn div')
+//Roll/Start to roll rice
 const roll = document.querySelector('.roll')
 //Start/Roll Button clicked will initalize game
 //Below will rolls the dice 
 roll.addEventListener('click',rollDice)
-//Next will listen for dice selection
-
+//Below will listen for dice selection
+function playAudio() {
+    sound.src = './DiceRoll3.mp3'
+    sound.volume = 0.3;
+    sound.play().volume;
+}
 
 function rollDice(){  
-//Select all .dice on document 
-//For Each Loop to roll each individial die
+    
+    playAudio() //Sound effect for dice roll
+    
+
+    //Select all .dice on document
+    //For Each Loop to roll each individial die and change innerText
     dice.forEach((dice, i) => {
             if (turnDiceSelection[i] === undefined){
                 diceRollResult[i] = turnDiceSelection[i]  
             }
             //Randomizer for die number
-            if (!diceRollResult[i]){
+            if (!diceRollResult[i]) {
             let diceRoll = Math.ceil(Math.random() * diceOptions.length)
             //change innerText to display result
             dice.innerText = diceRoll
             //Create an array of what was rolled
             diceRollResult[i] = diceRoll
-            }
-    
+            }  
     // console.log(diceRollResult, turnDiceSelection)
     })
 
     sortDiceTally(diceRollResult) //Returns scoreOptons object
+    
     scoreParse(scoreOptions) 
     
+    scoreBoardListener(scoreCardTally)
     
 }
+
 
 dice.forEach((dice,i) => {
     dice.addEventListener('click', (evt) =>{
@@ -49,10 +72,25 @@ dice.forEach((dice,i) => {
                 //CHANGE CSS CLASS ON CLICK
                 dice.setAttribute('class','dice')
                 
-            }
-        }
+            } 
+        } 
     })
 })
+
+
+function scoreBoardListener(item){
+    scoreBoard.forEach((scoreBoard,i) => {
+        scoreBoard.addEventListener('click', (evt) =>{
+            console.log(scoreBoard)
+            if (scoreBoard !== undefined ){
+                console.log(scoreBoard)
+                let clickedScoreBoardItem = scoreBoard.className
+                console.log(item,clickedScoreBoardItem,item.threeOfKind)
+                scoreBoard.innerText = item[clickedScoreBoardItem]
+            }
+        })
+    })
+}
 
 function sortDiceTally (arr){
     scoreOptions = {
@@ -66,47 +104,28 @@ function sortDiceTally (arr){
     for (const number of arr) {
          scoreOptions[number] = scoreOptions[number] + 1
         }
-    console.log(scoreOptions)
     return scoreOptions
 }
-//End sortDiceTall function
+//End sortDiceTally function
 
 //************************************************** */
 //Function to evaluate all scoring options based on the current dice roll
-function scoreParse (obj){
-    let score = Object.values(obj)
+function scoreParse (scoreOptions){
+    let score = Object.values(scoreOptions)
     let straightCheck = 0
     let sum = diceRollResult.reduce(function(a, b){
         return a + b;
         }, 0);
-    let scoreCardTally = {
-        1:0,
-        2:0,
-        3:0,
-        4:0,
-        5:0,
-        6:0,
-        threeOfKind:0,
-        fourOfKind:0,
-        fullHouse:0,
-        smallStraight:0,
-        largeStraight:0,
-        yahtzee: 0,
-        chance: 0,
-    }
-    //fullHouseCheck is used for alternative method currently commented out
-    // let fullHouseCheck = 0
-    score.forEach((number,index) =>{
-        scoreCardTally[index + 1] = score[index] * diceOptions[index]
-        console.log(`You can take ${score[index] * diceOptions[index]} on your ${diceOptions[index]}'s`)
-        
-    })
+     
+    scoreCardTally = {}
     
-    //FOR EACH loop to check for 3, 4, and 5 of a kinds.  Did not use if/else if since 
+    //FOR EACH loop to validate scoreing options.  for 3, 4, and 5 of a kinds.  Did not use if/else if since 
     //a 5 of a kind can also be a 3 or 4 of a kind, a 4 of a kind can also be a 3 of a kind.
     score.forEach((number,index) => {       
-        //Check for 5 of a Kind AKA Yahtzee
+        scoreCardTally[index + 1] = score[index] * diceOptions[index]
+        // console.log(`You can take ${score[index] * diceOptions[index]} on your ${diceOptions[index]}'s`)
         
+        //Check for 5 of a Kind AKA Yahtzee
         if (number >= 5){
             // console.log(index)
             // console.log(number)
@@ -128,26 +147,17 @@ function scoreParse (obj){
             console.log('You can take a 3 of Kind', sum)
         }
     })
-    //Two methods for solving Full House Check
+    //Full House Check
+    //Filter out dice tallys less than 1 and greater than 4.  For example: if you have only 1 two or 4 fives.
+    //This allows us to check for dice tallies of 3 (3 of a kind) and 2 aka Full House
     let fullHouse = score.filter(function (element){
         return (element > 1 && element < 4)
     }) 
     fullHouse = fullHouse.sort()
-    // console.log(fullHouse,score)
     if (fullHouse[0] === 2 && fullHouse[1] === 3){
         scoreCardTally.fullHouse = 25
         console.log('Full House Scores 25 points')}
-     // for (i = 0; i < score.length; i++){
-    //     console.log("Inside Method 2", score[i])
-        
-    //     if (score[i] === 2 || score[i] === 3){
-    //         fullHouseCheck += 1
-    //         console.log(fullHouseCheck)
-    //     }
-    //     if (fullHouseCheck === 2){
-    //         console.log("Full House Method 2")
-    //     }
-    // }
+     
     //Large and Small Straights Check
     for (let i = 0; i < score.length - 1; i++){
         if ( score[i+1] >= 1 && score[i] >= 1){
@@ -166,9 +176,7 @@ function scoreParse (obj){
     console.log(`You can take ${sum} on Chance`)
 
     console.log("Score Card Tally:", scoreCardTally)
+    return scoreCardTally
 }
 ///End Score Parse Function
 
-function playAudio(url) {
-    new Audio(url).play();
-  }

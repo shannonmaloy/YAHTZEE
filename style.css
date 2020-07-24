@@ -45,15 +45,13 @@
     width: 75%; 
     justify-content: center;
     align-content: center;
-
-
 }
 .playerScore{
     text-align: center;
     justify-content: center;
     align-items: center;
     font-size: 4vw;
-    border: 2px solid black;
+    border: 4px solid black;
     border-radius: 8px;
     margin: 3px;
     padding: 2px;
@@ -83,6 +81,8 @@
     transition: transform 1.5s ;
     transform-style: preserve-3d;
     transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    
+    
 }
 
 .dice-clicked {
@@ -98,6 +98,21 @@
     cursor: pointer;
     border-radius: 10px;
     margin: 5px;
+    }
+
+    .rolled{
+        width: 7vw;
+        height: 7vw;
+        font-family: 'diceFont';
+        color: rgb(224, 21, 21);
+        background-color: white;
+        font-size: 9vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 10px;
+        margin: 5px;
     animation: swing;
     animation-duration: 2s;
     perspective: 600px;
@@ -105,6 +120,7 @@
     transform-style: preserve-3d;
     transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
     }
+
       
     .gameBoard {
         font-family: 'yahtzee', cursive;
@@ -205,7 +221,7 @@
         border-radius: 8px;
         margin: 1px;
     }
-    .player {
+    .playerColumn div {
         display: flex;
         justify-content: center;
         text-align: center;
@@ -265,8 +281,6 @@
         box-sizing: content-box;
     }
 
-  
-
     .diceItem {
         font-family: 'diceFont', cursive;
         font-size: 2vw;
@@ -283,10 +297,6 @@
         opacity: 0;
     }
 
-    /* .howToScore:hover{
-        font-size: 34px;
-    } */
-
     .playerColumn:hover {
         background-color: #6286a3;
         border-radius: 8px;
@@ -298,5 +308,44 @@
       }
     
     .roll:hover,.take-score:hover {
-        background: rgb(72,143,201);
-background: radial-gradient(circle, rgba(72,143,201,1) 14%, rgba(115,149,176,1) 64%, rgba(255,255,255,1) 100%);}
+        background: rgb(115,149,176);
+        background: radial-gradient(circle, rgba(115,149,176,1) 12%, rgba(72,143,201,1) 61%, rgba(255,255,255,1) 100%);}
+
+   
+    /* Score Card Tips - pops up on highlighting of scoreMethods */
+    .scoreMethods {
+        position: relative;
+      }
+      
+      .scoreMethods .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 75%;
+        left: 80%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      
+      .scoreMethods .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+      }
+      
+      .scoreMethods:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
