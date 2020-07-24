@@ -1,133 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css");
+@font-face {
+    font-family: 'diceFont';
+    src: url('./DpolyBlockDice-Weo9.ttf' );/* IE9 Compat Modes */
+    src: url('./DpolyBlockDice-Weo9.ttf') format('embedded-opentype'), /* IE6-IE8 */
+         url('./DpolyBlockDice-Weo9.ttf') format('woff2'), /* Super Modern Browsers */
+         url('./DpolyBlockDice-Weo9.ttf') format('woff'), /* Pretty Modern Browsers */
+         url('./DpolyBlockDice-Weo9.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('./DpolyBlockDice-Weo9.ttf') format('svg'); /* Legacy iOS */        
+}
+@font-face {
+    font-family: 'yahtzee2';
+    src: url('./Squirk-RMvV.ttf'); /* IE9 Compat Modes */
+    src: url('./Squirk-RMvV.ttf') format('embedded-opentype'), /* IE6-IE8 */
+         url('./Squirk-RMvV.ttf') format('woff2'), /* Super Modern Browsers */
+         url('./Squirk-RMvV.ttf') format('woff'), /* Pretty Modern Browsers */
+         url('./Squirk-RMvV.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('./Squirk-RMvV.ttf') format('svg'); /* Legacy iOS */      
+}
+
+@font-face {
+    font-family: 'yahtzee';
+    src: url('./GlueGun-GW8Z.ttf'); /* IE9 Compat Modes */
+    src: url('./GlueGun-GW8Z.ttf') format('embedded-opentype'), /* IE6-IE8 */
+         url('./GlueGun-GW8Z.ttf') format('woff2'), /* Super Modern Browsers */
+         url('./GlueGun-GW8Z.ttf') format('woff'), /* Pretty Modern Browsers */
+         url('./GlueGun-GW8Z.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('./GlueGun-GW8Z.ttf') format('svg'); /* Legacy iOS */      
+}
+.gameBoard {
+    font-family: 'yahtzee2', cursive;
+    /* text-shadow: 3px 3px 9px black; */
+    border-radius: 15px;
+    font-size: 1.1vw;
+}
+
+
+    /* border: 2px dotted black; */
+
+
 /* body{
     margin: auto 0;
 } */
 
 
-.dice, .roll {
-height: 70px;
-width: 70px;
-border: 3px solid black;
-font-size: 5em;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
+
+.dice {
+    width: 7vw;
+    height: 7vw;
+    font-family: 'diceFont';
+    color: black;
+    background-color: whitesmoke;
+    font-size: 9vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 5px;
+    animation: swing;
+    animation-duration: 2s;
+    perspective: 600px;
+    transition: transform 1.5s ;
+    transform-style: preserve-3d;
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
 }
 
 .dice-clicked {
-    height: 70px;
-    width: 70px;
-    border: 3px solid black;
-    font-size: 5em;
-    display: inline-flex;
-    align-items: center;
+    width: 7vw;
+    height: 7vw;
+    font-family: 'diceFont';
+    color: black;
     background-color: gray;
+    font-size: 9vw;
+    display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
+    border-radius: 10px;
+    margin: 5px;
+    animation: swing;
+    animation-duration: 2s;
+    perspective: 600px;
+    transition: transform 1.5s ;
+    transform-style: preserve-3d;
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
     }
-   
-
-    /* .grid-container, .scoreMethods {
-        display: grid;
-        grid-template-columns: 300px 300px 300px 300px;
-        grid-template-rows: 50px 50px 1fr 50px 50px 50px 50px 50px 50px 1fr;
-        gap: 1px 7px;
-        border: 5px solid black;
-        grid-template-areas: "Upper-Section How-to\ Score Player-1 Player-2" "Ones Count-and\ Add\ Only\ Ones . ." "Twos . . ." "Threes . . ." "Fours . . ." "Fives . . ." "Sixes . . ." "Total-Score . . ." "BONUS . . ." "Total-Of\ Upper\ Section . . .";
-      }
-     */
-
-
       
-
-      
-    
     .gameBoard {
-        max-width: 900px;
+        max-width: 88%;
         display: flex;
         justify-content: center;
         align-content: center;
         flex-direction: column;
-        margin: 0 auto;
-        border: 2px solid red;
-        padding: 20px;
-        background-color: lavender;
-        box-sizing: border-box;
+        margin: 10px auto;
+        border: 5px solid rgb(5, 4, 4);
+        padding: 30px;
+        background-color: #2c8ad6;
+        box-sizing: content-box;
+        border-radius: 15px;
     }
 
     .scoreCardContainer {
         display: grid;
-        width: 100%;
-        grid-template-columns: repeat(2, 5fr);
+
+        border-radius: 15px;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.5fr);
         grid-column-gap: 0;
-        margin: 15px auto;
-        border: 2px solid yellow;
-        background-color: white;
+        margin: 5px 0;
+        border: 2px solid black;
+        background-color: whitesmoke;
         box-sizing: border-box;
-        
+        font-size: 1.2vw;
+        justify-content: center;
+        align-content: center;
+        padding: 3px;
+        min-width: 0;
     }
+    
 
     .upperScoreSection, .lowerScoreSection {
         display: grid;
-        grid-template-columns: repeat(1, 30%) repeat(1, 30%) auto auto;
+        grid-template-columns: 35%  auto auto auto auto;
         grid-column-gap: 0;
-        min-width: 98%;
-        margin: 15px auto;
-        border: 2px solid red;
-        background-color: green;
-        padding: 5px;
-        box-sizing: border-box;
+        border-radius: 15px;
         
+        padding: 3px;
+        box-sizing: content-box;
+        min-width: 0;
+       
     }
 
-    .scoreOptionsColumn, .howToColumn, .player1Column,.player2Column {
+    .scoreOptionsColumn, .howToColumn, .playerColumn {
         display: grid;
-        
-        grid-template-columns: repeat(1, auto);
-        grid-template-rows:  repeat(10,2.5vw);
+        grid-template-rows:  auto repeat(9,2.5vw);
         grid-column-gap: 0;
-        background-color: rgba(255, 255, 255, 0.8);
-        
-        box-sizing: border-box;
-        
+        box-sizing: content-box;
+        border-radius: 8px;
+        border: 1px solid black:
         
     }
+  
 
-   .scoreMethods {
-        display: flex;
-        justify-content: start;
+   .scoreMethods2 {
+        display: grid;
+        grid-template-columns: 40% 1fr;
+        min-width: 0;
         align-items: center;
         border: 1px solid purple;
-        background-color: orange;
-        padding: 5px;
-        font-size: 1.15vw;
-        box-sizing: border-box;
+        background-color: #7395b0;
+        padding: 3px;
+        font-size: 1.7vw;
+        box-sizing: content-box;  
+        border-radius: 8px;
+        margin: 1px;
     }
 
-    .player1 {
+    .scoreMethods {
         display: flex;
-        justify-content: center;
-        text-align: center;
+        min-width: 0;
         align-items: center;
-        border: 1px solid purple;
-        background-color: orange;
-        padding: 5px;
-        font-size: 1.5vw;
+        border: 1px solid rgb(95, 44, 95);
+        background-color: #7395b0;
+        padding: 3px;
+        font-size: 1.7vw;
+        box-sizing: content-box; 
+        border-radius: 8px; 
+        margin: 1px;
     }
 
     .howToScore {
         display: flex;
+        /* flex-wrap: wrap; */
         justify-content: center;
         text-align: center;
         align-items: center;
         border: 1px solid purple;
-        background-color: rgb(66, 133, 138);
-        padding: 4px;
-        font-size: .9vw;
+        background-color:white;
+        padding: 3px;
+        font-size: 90%;
+        box-sizing: content-box;
+        min-width: 0;
+        border-radius: 8px;
+        margin: 1px;
+    }
+    .player {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        border: 1px solid black;
+        background-color: #2c8ad6;
+        font-size: 130%;
+        box-sizing: content-box;
+        padding: 5px;
+        min-width: 0;
+        border-radius: 8px;
+        margin: 1px;
     }
 
     .dice-container {
         display: flex;
-        
         justify-content: center;
+        padding: 10px;
+    }
+
+    .game-info-container {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 10px;
+        
+    }
+
+    .roll, .take-score{
+        width: 20%;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #6286a3;
+        border: 4px solid black;
+        font-size: 3vw;
+        
+    }
+    .game-info {
+        width: 50%;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 4px solid black;
+        font-size: 2vw;
+        
+        box-sizing: content-box;
+    }
+
+    .button-container, .game-info-container, .dice-container{
+        border: black dashed 1px;
+       
+    }
+
+    .diceItem {
+        font-family: 'diceFont', cursive;
+        font-size: 2vw;
+        margin: 0 3px;
+        
+    }
+    .right {
+        display: flex;
+        justify-content: left;
+        margin: 0 6px;
+    }
+
+    /* .howToScore:hover{
+        font-size: 34px;
+    } */
+
+    .playerColumn:hover {
+        background-color: #6286a3;
     }
