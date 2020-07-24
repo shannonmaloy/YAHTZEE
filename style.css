@@ -28,23 +28,42 @@
          url('./GlueGun-GW8Z.ttf')  format('truetype'), /* Safari, Android, iOS */
          url('./GlueGun-GW8Z.ttf') format('svg'); /* Legacy iOS */      
 }
-.gameBoard {
-    font-family: 'yahtzee2', cursive;
-    /* text-shadow: 3px 3px 9px black; */
-    border-radius: 15px;
-    font-size: 1.1vw;
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    
+}
+.titleImage {
+    width: 25%;
+}
+#yahtzeeImage {
+    width: 100%;
+}
+.playerScoreContainer {
+    display: flex;
+    width: 75%; 
+    justify-content: center;
+    align-content: center;
+
+
+}
+.playerScore{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 4vw;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 3px;
+    padding: 2px;
+    width: 20%;
+    background-color: #6286a3;
 }
 
-
-    /* border: 2px dotted black; */
-
-
-/* body{
-    margin: auto 0;
-} */
-
-
-
+.playerTitle {
+    font-size: 2vw;
+}
 .dice {
     width: 7vw;
     height: 7vw;
@@ -88,6 +107,8 @@
     }
       
     .gameBoard {
+        font-family: 'yahtzee', cursive;
+        font-size: 1.1vw;
         max-width: 88%;
         display: flex;
         justify-content: center;
@@ -95,7 +116,7 @@
         flex-direction: column;
         margin: 10px auto;
         border: 5px solid rgb(5, 4, 4);
-        padding: 30px;
+        padding: 5px 30px;
         background-color: #2c8ad6;
         box-sizing: content-box;
         border-radius: 15px;
@@ -124,7 +145,7 @@
         grid-template-columns: 35%  auto auto auto auto;
         grid-column-gap: 0;
         border-radius: 15px;
-        
+        border: 0px black solid;
         padding: 3px;
         box-sizing: content-box;
         min-width: 0;
@@ -133,11 +154,11 @@
 
     .scoreOptionsColumn, .howToColumn, .playerColumn {
         display: grid;
-        grid-template-rows:  auto repeat(9,2.5vw);
+        grid-template-rows:  auto repeat(7,2.5vw);
         grid-column-gap: 0;
         box-sizing: content-box;
         border-radius: 8px;
-        border: 1px solid black:
+        border: 1px solid whitesmoke;
         
     }
   
@@ -147,7 +168,7 @@
         grid-template-columns: 40% 1fr;
         min-width: 0;
         align-items: center;
-        border: 1px solid purple;
+        border: 2px solid black;
         background-color: #7395b0;
         padding: 3px;
         font-size: 1.7vw;
@@ -160,7 +181,7 @@
         display: flex;
         min-width: 0;
         align-items: center;
-        border: 1px solid rgb(95, 44, 95);
+        border: 2px solid black;
         background-color: #7395b0;
         padding: 3px;
         font-size: 1.7vw;
@@ -175,7 +196,7 @@
         justify-content: center;
         text-align: center;
         align-items: center;
-        border: 1px solid purple;
+        border: 3px solid purple;
         background-color:white;
         padding: 3px;
         font-size: 90%;
@@ -189,7 +210,7 @@
         justify-content: center;
         text-align: center;
         align-items: center;
-        border: 1px solid black;
+        border: 2px solid black;
         background-color: #2c8ad6;
         font-size: 130%;
         box-sizing: content-box;
@@ -197,37 +218,40 @@
         min-width: 0;
         border-radius: 8px;
         margin: 1px;
+        
     }
 
     .dice-container {
         display: flex;
         justify-content: center;
         padding: 10px;
+        align-items: center;
     }
 
     .game-info-container {
         display: flex;
         justify-content: center;
-        padding: 10px;
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: space-evenly;
-        padding: 10px;
+        padding: 8px;
         
     }
 
-    .roll, .take-score{
+    .take-score, .roll {
         width: 20%;
+        height: 20%;
         padding: 15px;
         display: flex;
         justify-content: center;
+        text-align: center;
         align-items: center;
-        background-color: #6286a3;
+        background-color: #7395b0;
         border: 4px solid black;
-        font-size: 3vw;
-        
+        font-size: 2.5vw;
+        font-family: 'yahtzee', cursive;
+        transition-duration: .4s;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 8px;
+        margin: 0 30px;
     }
     .game-info {
         width: 50%;
@@ -237,14 +261,11 @@
         align-items: center;
         border: 4px solid black;
         font-size: 2vw;
-        
+        border-radius: 8px;
         box-sizing: content-box;
     }
 
-    .button-container, .game-info-container, .dice-container{
-        border: black dashed 1px;
-       
-    }
+  
 
     .diceItem {
         font-family: 'diceFont', cursive;
@@ -258,10 +279,24 @@
         margin: 0 6px;
     }
 
+    #upperSection {
+        opacity: 0;
+    }
+
     /* .howToScore:hover{
         font-size: 34px;
     } */
 
     .playerColumn:hover {
         background-color: #6286a3;
+        border-radius: 8px;
+        border: 1px solid black;
     }
+    .roll:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    
+    .roll:hover,.take-score:hover {
+        background: rgb(72,143,201);
+background: radial-gradient(circle, rgba(72,143,201,1) 14%, rgba(115,149,176,1) 64%, rgba(255,255,255,1) 100%);}

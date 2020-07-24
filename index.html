@@ -16,13 +16,22 @@
   <!-- Main game board holding all elements -->
   <div class='gameBoard'>
       
-      <img scr='yahtzee-small.png' alt='Yahtzee' width=344px>
-
+    <div class='titleContainer'>
+      <div class='titleImage'>
+          <img id='yahtzeeImage' src='./yahtzee-small.png' alt='Yahtzee'>
+      </div> 
+      <div class='playerScoreContainer'>  
+          <div class='playerScore'><p class='playerScore1'>123</p> <p class='playerTitle'>Player 1</p></div>
+          <div class='playerScore'><p class='playerScore1'>234</p> <p class='playerTitle'>Player 2</p></div>
+          <div class='playerScore'><p class='playerScore1'>654</p> <p class='playerTitle'>Player 3</p></div>
+          <div class='playerScore'><p class='playerScore1'>432</p> <p class='playerTitle'>Player 4</p></div>
+      </div>    
+    </div> 
       <div class="scoreCardContainer">
             
               <div class='upperScoreSection'>
                 <div class ='scoreOptionsColumn'>
-                          <div id='upperSection'class="scoreMethods2">YAHTZEE</div>
+                          <div id='upperSection'class="scoreMethods2"></div>
                           <div id='ones' class= 'scoreMethods2'>
                               <div class = 'number'>Ones</div>
                               <div class = 'right'><span class = 'diceItem'>1</span> = 1</div> 
@@ -48,9 +57,9 @@
                             <div class = 'number'>Sixes</div>
                             <div class = 'right'><span class = 'diceItem'>6</span> = 6</div>
                           </div>
-                          <div id='upperSubtotal'class="scoreMethods">Subtotal</div>
+                          
                           <div id='bonus'class="scoreMethods">BONUS = + 35 </div>
-                          <div id='upperTotalScore'class="scoreMethods">Section Total</div>
+                          
                          
                 </div>
                 <!-- <div class='howToColumn'>
@@ -75,21 +84,21 @@
                           <div class="player">5</div>
                           <div class="player"></div>
                           <div class="player"></div>
-                          <div class="player"></div>
-                          <div class="player"></div>
+                          
+                          
                          
                 </div>
                 <div class='playerColumn'>
                   <div class="player">Player 2</div>
                   <div class="player">4</div>
                   <div class="player"></div>
-                  <div class="player"></div>
+                  <div class="player">12</div>
                   <div class="player"></div>
                   <div class="player">5</div>
                   <div class="player"></div>
                   <div class="player">2</div>
-                  <div class="player"></div>
-                  <div class="player"></div>
+                  
+                 
                 
                 </div>  
                 <div class='playerColumn'>
@@ -101,8 +110,8 @@
                   <div class="player"></div>
                   <div class="player"></div>
                   <div class="player"></div>
-                  <div class="player"></div>
-                  <div class="player"></div>
+                  
+                  
                  
                 </div>
                 <div class='playerColumn'>
@@ -114,8 +123,8 @@
                   <div class="player">5</div>
                   <div class="player"></div>
                   <div class="player">2</div>
-                  <div class="player"></div>
-                  <div class="player"></div>
+                  
+                  
                 </div>  
               </div>    
               
@@ -129,8 +138,7 @@
                               <div id='fives'class="scoreMethods">Large Straight</div>
                               <div id='sixes'class="scoreMethods">YAHTZEE</div>
                               <div id='upperSubtotal'class="scoreMethods">Chance</div>
-                              <div id='bonus'class="scoreMethods">Section Total</div>
-                              <div id='upperTotalScore'class="scoreMethods">GRAND TOTAL</div>
+                              
                             
                     </div>
                     <!-- <div class='howToColumn'>
@@ -150,13 +158,12 @@
                                         <div class="player">Player 1</div>
                                         <div class="player">4</div>
                                         <div class="player"></div>
-                                        <div class="player"></div>
+                                        <div class="player">25</div>
                                         <div class="player"></div>
                                         <div class="player">5</div>
                                         <div class="player"></div>
                                         <div class="player"></div>
-                                        <div class="player"></div>
-                                        <div class="player"></div>
+                                       
                                       
                     </div>
                     <div class='playerColumn'>
@@ -168,8 +175,7 @@
                                 <div class="player">5</div>
                                 <div class="player"></div>
                                 <div class="player">2</div>
-                                <div class="player"></div>
-                                <div class="player"></div>
+                                
                               
                     </div>  
                     <div class='playerColumn'>
@@ -178,11 +184,10 @@
                                 <div class="player"></div>
                                 <div class="player"></div>
                                 <div class="player"></div>
-                                <div class="player">5</div>
+                                <div class="player">15</div>
                                 <div class="player"></div>
                                 <div class="player"></div>
-                                <div class="player"></div>
-                                <div class="player"></div>
+                                
                               
                     </div>
                     <div class='playerColumn'>
@@ -191,11 +196,10 @@
                         <div class="player"></div>
                         <div class="player"></div>
                         <div class="player"></div>
-                        <div class="player">5</div>
+                        <div class="player">35</div>
                         <div class="player"></div>
                         <div class="player">2</div>
-                        <div class="player"></div>
-                        <div class="player"></div>
+                        
                       
                     </div> 
               </div> 
@@ -203,12 +207,14 @@
         </div>
 
         <div class='dice-container'>
-          
+          <button type='button'class='roll' onclick="playAudio('./DiceRoll.mp3')">Roll</button>
+              
           <div class="dice">1</div>
           <div class="dice">2</div>
           <div class="dice">3</div>
           <div class="dice">4</div>
           <div class="dice">5</div>
+          <button type='button'class='take-score'>Take Score</button>
         </div>
 
         <div class='game-info-container'>
@@ -216,10 +222,7 @@
            
         </div>
 
-        <div class='button-container'>
-              <div class="roll">Start</div>
-              <div class="take-score">Take Score</div>
-              </div>
+        
 
 
   </div>

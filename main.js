@@ -168,3 +168,7 @@ function scoreParse (obj){
     console.log("Score Card Tally:", scoreCardTally)
 }
 ///End Score Parse Function
+
+function playAudio(url) {
+    new Audio(url).play();
+  }
