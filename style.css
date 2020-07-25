@@ -46,7 +46,7 @@
     justify-content: center;
     align-content: center;
 }
-.playerScore{
+.playerScoreContainer div{
     text-align: center;
     justify-content: center;
     align-items: center;

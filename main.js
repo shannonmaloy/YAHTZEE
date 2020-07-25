@@ -5,7 +5,7 @@ const diceOptions = [1, 2, 3, 4, 5, 6]
 let diceRollResult = []
 let turnDiceSelection = []
 let clickedItem = null
-
+let maxPlayers = 4
 
 
 // let rotate360 = [
@@ -20,11 +20,11 @@ const scoreBoard = document.querySelectorAll('.playerColumn div')
 const roll = document.querySelector('.roll')
 //Query for Take Score Button
 const takeScore = document.querySelector('.take-score')
-//Start/Roll Button clicked will initalize game
+
 
     
 
-//Below will rolls the dice 
+//Below waits for Start Button click.  Request number of players from user. 
 roll.addEventListener('click',evt =>{
     let pressStart = evt.target
     if (evt.target.innerText === 'Start'){
@@ -38,22 +38,41 @@ roll.addEventListener('click',evt =>{
         modal.style.display = "none";
         form.reset()
         pressStart.innerText = 'Roll'
+        gameSetup(playerNumber)
     })    
-
-        
-        
+ 
     } else if(evt.target.innerText === 'Roll'){
         (rollDice())
     }  
 })
-//Below will listen for dice selection
+
+//Dice Sound
 function playAudio() {
     sound.src = './DiceRoll3.mp3'
     sound.volume = 0.3;
     sound.play().volume;
 }
 
-
+function gameSetup(playerNumber){
+    let playerScores = document.querySelector('.playerScoreContainer')
+    console.log(playerScores)
+    for (let i = maxPlayers - 1; i >= playerNumber; i--){
+        playerScores.removeChild(playerScores.children[i])
+    }
+    let lower = document.querySelector('.lowerScoreSection')
+    let upper = document.querySelector('.upperScoreSection')
+    let grid = ''
+    for (let i = maxPlayers; i > playerNumber; i--){
+        lower.children[i].style.display = 'none'
+        upper.children[i].style.display = 'none'
+    }
+    for (i = 0; i < playerNumber; i++){
+        grid = grid + 'auto '
+    }
+    console.log(grid)
+    upper.style.gridTemplateColumns = `35% ${grid}`
+    lower.style.gridTemplateColumns = `35% ${grid}`
+}
 
 
 function rollDice(){  

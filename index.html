@@ -21,10 +21,10 @@
           <img id='yahtzeeImage' src='./yahtzee-small.png' alt='Yahtzee'>
       </div> 
       <div class='playerScoreContainer'>  
-          <div class='playerScore'><p class='playerScore1'>123</p> <p class='playerTitle'>Player 1</p></div>
-          <div class='playerScore'><p class='playerScore1'>234</p> <p class='playerTitle'>Player 2</p></div>
-          <div class='playerScore'><p class='playerScore1'>654</p> <p class='playerTitle'>Player 3</p></div>
-          <div class='playerScore'><p class='playerScore1'>432</p> <p class='playerTitle'>Player 4</p></div>
+          <div class='playerScore1'><p class='player1Score'>0</p> <p class='playerTitle'>Player 1</p></div>
+          <div class='playerScore2'><p class='player2Score'>0</p> <p class='playerTitle'>Player 2</p></div>
+          <div class='playerScore3'><p class='player3Score'>0</p> <p class='playerTitle'>Player 3</p></div>
+          <div class='playerScore4'><p class='playe4Score'>0</p> <p class='playerTitle'>Player 4</p></div>
       </div>    
     </div> 
       <div class="scoreCardContainer">
@@ -81,7 +81,7 @@
                           <div class= '6'></div>
                           <div class= 'bonus'></div>
                 </div>  
-                <div class='playerColumn'>
+                <div class='playerColumn 3'>
                           <div class="player">Player 3</div>
                           <div class= '1'></div>
                           <div class= '2'></div>
@@ -91,7 +91,7 @@
                           <div class= '6'></div>
                           <div class= 'bonus'></div>
                 </div>
-                <div class='playerColumn'>
+                <div class='playerColumn 4'>
                           <div class="player">Player 4</div>
                           <div class= '1'></div>
                           <div class= '2'></div>
@@ -183,14 +183,14 @@
 
 
 
-<!-- The Modal -->
+<!-- Modal -->
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
   <form id='numberOfPlayersForm' class="modal-content">
     <span class="close">&times;</span>
     <p>Welcome To Yahtzee!</p> <p>How Many Players?</p>
-    <input type='number' name='numberOfPlayers' placeholder='1 - 4 Players' value='' />
+    <input type='number' name='numberOfPlayers' placeholder='1 - 4 Players' value='' max='4' required />
     <input type='submit' name='numberOfPlayersSubmit' placeholder='1 - 4 Players' value='Submit'/>
   </form>
 
