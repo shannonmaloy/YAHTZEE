@@ -4,7 +4,7 @@ const sound = new Audio()
 const diceOptions = [1, 2, 3, 4, 5, 6]
 let diceRollResult = []
 let turnDiceSelection = []
-
+let clickedItem = null
 
 
 
@@ -18,15 +18,43 @@ const dice = document.querySelectorAll('.dice')
 const scoreBoard = document.querySelectorAll('.playerColumn div')
 //Roll/Start to roll rice
 const roll = document.querySelector('.roll')
+//Query for Take Score Button
+const takeScore = document.querySelector('.take-score')
 //Start/Roll Button clicked will initalize game
+
+    
+
 //Below will rolls the dice 
-roll.addEventListener('click',rollDice)
+roll.addEventListener('click',evt =>{
+    let pressStart = evt.target
+    if (evt.target.innerText === 'Start'){
+        modal.style.display = "block";
+        const form = document.querySelector('#numberOfPlayersForm')
+        form.addEventListener('submit', evt =>{
+        console.log(evt)
+        evt.preventDefault()
+        const playerNumber = evt.target.numberOfPlayers.value
+        console.log(playerNumber)
+        modal.style.display = "none";
+        form.reset()
+        pressStart.innerText = 'Roll'
+    })    
+
+        
+        
+    } else if(evt.target.innerText === 'Roll'){
+        (rollDice())
+    }  
+})
 //Below will listen for dice selection
 function playAudio() {
     sound.src = './DiceRoll3.mp3'
     sound.volume = 0.3;
     sound.play().volume;
 }
+
+
+
 
 function rollDice(){  
     
@@ -54,10 +82,9 @@ function rollDice(){
     
     scoreParse(scoreOptions) 
     
-    scoreBoardListener(scoreCardTally)
-    
+    let shannon = scoreBoardListener(scoreCardTally)
+    console.log(shannon)
 }
-
 
 dice.forEach((dice,i) => {
     dice.addEventListener('click', (evt) =>{
@@ -78,18 +105,36 @@ dice.forEach((dice,i) => {
 })
 
 
+
 function scoreBoardListener(item){
-    scoreBoard.forEach((scoreBoard,i) => {
-        scoreBoard.addEventListener('click', (evt) =>{
-            console.log(scoreBoard)
+
+    scoreBoard.forEach((scoreBoard) => {
+        scoreBoard.setAttribute('tabindex', '-1')
+        scoreBoard.addEventListener('focus', (evt) =>{
             if (scoreBoard !== undefined ){
-                console.log(scoreBoard)
                 let clickedScoreBoardItem = scoreBoard.className
-                console.log(item,clickedScoreBoardItem,item.threeOfKind)
+                if (!item[clickedScoreBoardItem]){
+                    scoreBoard.innerText = 0
+                } else {
                 scoreBoard.innerText = item[clickedScoreBoardItem]
+                let selectedScore = item[clickedScoreBoardItem]
+                }   
+                    if (takeScore.addEventListener('click',evt=>{
+                        console.log('test')
+                        
+                    })){
+                        console.log('test 2')
+                    } else
+                    {
+                        evt.target.addEventListener('blur', (evt) => {
+                        scoreBoard.innerText = null
+                        },true)
+                    }  
             }
-        })
+        }, true)
     })
+    
+
 }
 
 function sortDiceTally (arr){
@@ -117,7 +162,9 @@ function scoreParse (scoreOptions){
         return a + b;
         }, 0);
      
-    scoreCardTally = {}
+    scoreCardTally = {
+
+    }
     
     //FOR EACH loop to validate scoreing options.  for 3, 4, and 5 of a kinds.  Did not use if/else if since 
     //a 5 of a kind can also be a 3 or 4 of a kind, a 4 of a kind can also be a 3 of a kind.
@@ -179,4 +226,21 @@ function scoreParse (scoreOptions){
     return scoreCardTally
 }
 ///End Score Parse Function
+
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
 

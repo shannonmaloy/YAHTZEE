@@ -160,7 +160,7 @@
         </div>
 
         <div class='dice-container'>
-          <button type='button'class='roll' >Roll</button>
+          <button type='button'class='roll' >Start</button>
               
           <div class="dice">1</div>
           <div class="dice">2</div>
@@ -179,6 +179,22 @@
 
 
   </div>
+
+
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <form id='numberOfPlayersForm' class="modal-content">
+    <span class="close">&times;</span>
+    <p>Welcome To Yahtzee!</p> <p>How Many Players?</p>
+    <input type='number' name='numberOfPlayers' placeholder='1 - 4 Players' value='' />
+    <input type='submit' name='numberOfPlayersSubmit' placeholder='1 - 4 Players' value='Submit'/>
+  </form>
+
+</div>
 
 
 <script src='./main.js'></script>
