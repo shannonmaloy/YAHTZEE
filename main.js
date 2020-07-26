@@ -254,17 +254,17 @@ function focus(evt){
     clickedItem = evt.target
         if (evt.target !== undefined ){
         let clickedScoreBoardItem = evt.target.className
-        if (!scoreCardTally[clickedScoreBoardItem]){
-            evt.target.innerText = 0
-            selectedScore = scoreCardTally[clickedScoreBoardItem]
-        } else {
-        evt.target.innerText = scoreCardTally[clickedScoreBoardItem]
-        selectedScore = scoreCardTally[clickedScoreBoardItem]
-        console.log(selectedScore)
-        console.log(clickedItem)
-        }   
+            if (!scoreCardTally[clickedScoreBoardItem]){
+                evt.target.innerText = 0
+                selectedScore = 0
+            } else {
+                evt.target.innerText = scoreCardTally[clickedScoreBoardItem]
+                selectedScore = scoreCardTally[clickedScoreBoardItem]
+                console.log(selectedScore)
+                console.log(clickedItem)
+            }      
                 evt.target.addEventListener('blur', blur, true)
-    }
+        }
 
 }
 
