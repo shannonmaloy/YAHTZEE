@@ -5,44 +5,68 @@ const diceOptions = [1, 2, 3, 4, 5, 6]
 let diceRollResult = []
 let turnDiceSelection = []
 let clickedItem = null
+let selectedScore = null
 let maxPlayers = 4
-
-
-// let rotate360 = [
-//         {transform: 'rotateX(360deg) rotateY(360deg) rotateZ(360deg)'},
-//   ]
+let bonusAmount = 35
+let currentPlayer = 1
+let rollCount = 3
+let playerNumber = 1
+let pressStart = null
+let playerScoreKeeper = []
+let bonusCheck = null
 
 //Query for the dice
 const dice = document.querySelectorAll('.dice')
 //Query for Score Card
-const scoreBoard = document.querySelectorAll('.playerColumn div')
+let scoreBoard = null
 //Roll/Start to roll rice
-const roll = document.querySelector('.roll')
+const startAndRollButton = document.querySelector('.roll')
 //Query for Take Score Button
 const takeScore = document.querySelector('.take-score')
 
+let gameInfoBar = document.querySelector('.game-info')
 
-    
+class Player {
+    constructor(){
+    this.ones = 0;
+    this.twos = 0;
+    this.threes = 0;
+    this.fours = 0;
+    this.fives = 0;
+    this.sixes = 0;
+    this.bonus = 0;
+    this.threeOfKind = 0;
+    this.fourOfKind = 0;
+    this.fullHouse = 0;
+    this.smallStraight = 0;
+    this.largeStraight = 0;
+    this.yahtzee = 0;
+    this.chance = 0;
+}
+}
 
 //Below waits for Start Button click.  Request number of players from user. 
-roll.addEventListener('click',evt =>{
-    let pressStart = evt.target
-    if (evt.target.innerText === 'Start'){
+startAndRollButton.addEventListener('click',evt =>{
+    pressStart = evt.target
+    if(evt.target.innerText === `Roll (${rollCount})`){
+        if (rollCount > 0){
+            rollCount = rollCount - 1;
+            pressStart.innerText = `Roll (${rollCount})`;
+            (rollDice()) 
+        
+        }
+ 
+    } else if (evt.target.innerText === 'Start'){
         modal.style.display = "block";
         const form = document.querySelector('#numberOfPlayersForm')
         form.addEventListener('submit', evt =>{
-        console.log(evt)
-        evt.preventDefault()
-        const playerNumber = evt.target.numberOfPlayers.value
-        console.log(playerNumber)
-        modal.style.display = "none";
-        form.reset()
-        pressStart.innerText = 'Roll'
-        gameSetup(playerNumber)
-    })    
- 
-    } else if(evt.target.innerText === 'Roll'){
-        (rollDice())
+            evt.preventDefault()
+            playerNumber = evt.target.numberOfPlayers.value
+            modal.style.display = "none";
+            form.reset()
+            pressStart.innerText = `Roll (${rollCount})`
+            gameSetup(playerNumber)
+        })   
     }  
 })
 
@@ -55,7 +79,7 @@ function playAudio() {
 
 function gameSetup(playerNumber){
     let playerScores = document.querySelector('.playerScoreContainer')
-    console.log(playerScores)
+
     for (let i = maxPlayers - 1; i >= playerNumber; i--){
         playerScores.removeChild(playerScores.children[i])
     }
@@ -67,19 +91,47 @@ function gameSetup(playerNumber){
         upper.children[i].style.display = 'none'
     }
     for (i = 0; i < playerNumber; i++){
-        grid = grid + 'auto '
+        grid += 'auto '
     }
-    console.log(grid)
-    upper.style.gridTemplateColumns = `35% ${grid}`
-    lower.style.gridTemplateColumns = `35% ${grid}`
+    upper.style.gridTemplateColumns = `35% ${grid}`;
+    lower.style.gridTemplateColumns = `35% ${grid}`;
+    
+    //Creation of the array that holds all of the players created
+    for (let i = 0; i < (playerNumber); i++) {
+        playerScoreKeeper[i] = new Player()
+    }
+    currentPlayerMessage()
+    highlight()
 }
 
+function currentPlayerMessage(){
+    gameInfoBar.innerText = `Player ${currentPlayer}'s Turn!`
+}
+
+function highlight (){
+    let highlightColumn = document.querySelectorAll(`.playerColumn${currentPlayer}`)
+        highlightColumn.forEach(highlightColumn =>{
+            highlightColumn.className = 'playerColumnHighlightCurrent'
+        })
+
+    let highlightPlayerScore = document.querySelector(`.playerScore${currentPlayer}`)
+    highlightPlayerScore.className = 'currentPlayerHighlightScore'
+}
+
+function unhighlight (){
+    let highlightColumn = document.querySelectorAll(`.playerColumnHighlightCurrent`)
+        highlightColumn.forEach(highlightColumn =>{
+            highlightColumn.className = `playerColumn${currentPlayer}`
+        })
+
+    let highlightPlayerScore = document.querySelector('.currentPlayerHighlightScore')
+    highlightPlayerScore.className = `playerScore${currentPlayer}`
+}
 
 function rollDice(){  
+    //Sound effect for dice roll
+    playAudio() 
     
-    playAudio() //Sound effect for dice roll
-    
-
     //Select all .dice on document
     //For Each Loop to roll each individial die and change innerText
     dice.forEach((dice, i) => {
@@ -101,9 +153,77 @@ function rollDice(){
     
     scoreParse(scoreOptions) 
     
-    let shannon = scoreBoardListener(scoreCardTally)
-    console.log(shannon)
+    scoreBoardListener(scoreCardTally)
+
+    takeScore.addEventListener('click', evt =>{
+        console.log(selectedScore >= 0)
+        if (selectedScore === null){
+            gameInfoBar.innerText = "Select A Score Option Above, Then Select 'Take Score'"
+            return
+        }
+        let currentPlayClass = clickedItem.className
+        playerScoreKeeper[currentPlayer - 1][currentPlayClass] = selectedScore
+        console.log(playerScoreKeeper)
+        clickedItem.innerText = selectedScore
+        clickedItem.className = 'scored'
+        bonusChecker()
+        
+        //Check for bonus BEFORE the unlight function and the score pull below
+        unhighlight()
+        let scorePull = Object.values(playerScoreKeeper[currentPlayer - 1])
+        console.log(scorePull)
+        let updatePlayerScore = scorePull.reduce(function( a , b){
+        return a + b;
+        }, 0);
+        console.log(updatePlayerScore)
+        document.getElementById(`player${currentPlayer}Score`).innerHTML = updatePlayerScore
+        rollCount = 3
+        pressStart.innerText = `Roll (${rollCount})`
+        dice.forEach(dice  => { 
+            dice.setAttribute('class','dice')
+            turnDiceSelection = []
+        })
+        selectedScore = null
+        if (currentPlayer < playerNumber){
+            currentPlayer += 1
+        } else {currentPlayer = 1}
+        highlight()
+        currentPlayerMessage()
+        scoreBoard.forEach(scoreBoard =>{
+            removeFocusAndBlur(scoreBoard)
+        })
+    })
+
 }
+
+function bonusChecker(){
+    //Implemented solution from https://stackoverflow.com/questions/15748656/javascript-reduce-on-object
+    let bonusCheck = playerScoreKeeper[currentPlayer - 1]
+    const filteredBonus = ['1','2','3','4','5','6']
+    let filtered = filteredBonus.reduce((obj,key)=> ({...obj, [key]: bonusCheck[key]}), {})
+    let filteredAgain = Object.values(filtered)
+    let bonusCheckSum = filteredAgain.filter(function(element){return element || 0 }).reduce(function(a,b) {return a+b},0)
+    //Following code used a basis for above - see stackoverflow link above
+    // const raw = {
+    //     item1: { key: 'sdfd', value: 'sdfd' },
+    //     item2: { key: 'sdfd', value: 'sdfd' },
+    //     item3: { key: 'sdfd', value: 'sdfd' }
+    //   };
+      
+    //   const filteredKeys = ['item1', 'item3'];
+      
+    //   const filtered = filteredKeys
+    //     .reduce((obj, key) => ({ ...obj, [key]: raw[key] }), {});
+      
+    if (bonusCheckSum >= 63 && playerScoreKeeper[currentPlayer - 1][bonus] !== 0){
+        playerScoreKeeper[currentPlayer - 1].bonus = bonusAmount
+        document.querySelector('.playerColumnHighlightCurrent .bonus').innerText = bonusAmount
+    }
+
+
+}
+
+
 
 dice.forEach((dice,i) => {
     dice.addEventListener('click', (evt) =>{
@@ -124,36 +244,50 @@ dice.forEach((dice,i) => {
 })
 
 
+function removeFocusAndBlur(scoreBoard) {
+    scoreBoard.removeEventListener('focus', focus, true)
+    scoreBoard.removeEventListener('blur', blur, true)
+}
 
-function scoreBoardListener(item){
+function focus(evt){
+    clickedItem = null
+    clickedItem = evt.target
+        if (evt.target !== undefined ){
+        let clickedScoreBoardItem = evt.target.className
+        if (!scoreCardTally[clickedScoreBoardItem]){
+            evt.target.innerText = 0
+            selectedScore = scoreCardTally[clickedScoreBoardItem]
+        } else {
+        evt.target.innerText = scoreCardTally[clickedScoreBoardItem]
+        selectedScore = scoreCardTally[clickedScoreBoardItem]
+        console.log(selectedScore)
+        console.log(clickedItem)
+        }   
+                evt.target.addEventListener('blur', blur, true)
+    }
 
-    scoreBoard.forEach((scoreBoard) => {
-        scoreBoard.setAttribute('tabindex', '-1')
-        scoreBoard.addEventListener('focus', (evt) =>{
-            if (scoreBoard !== undefined ){
-                let clickedScoreBoardItem = scoreBoard.className
-                if (!item[clickedScoreBoardItem]){
-                    scoreBoard.innerText = 0
-                } else {
-                scoreBoard.innerText = item[clickedScoreBoardItem]
-                let selectedScore = item[clickedScoreBoardItem]
-                }   
-                    if (takeScore.addEventListener('click',evt=>{
-                        console.log('test')
-                        
-                    })){
-                        console.log('test 2')
-                    } else
-                    {
-                        evt.target.addEventListener('blur', (evt) => {
-                        scoreBoard.innerText = null
-                        },true)
-                    }  
-            }
-        }, true)
-    })
+}
+
+function blur(evt) {
+    evt.target.innerText = null 
+    console.log(selectedScore)
+    console.log(clickedItem)
+} 
+
+
+function scoreBoardListener(){
     
+    scoreBoard = document.querySelectorAll('.playerColumnHighlightCurrent div:not(.bonus)')
+    console.log(scoreBoard)
+    console.log('enter')
+    scoreBoard.forEach((scoreBoard) => {
+        console.log(scoreBoard.innerText)
 
+        if (scoreBoard.innerText === ''){
+        scoreBoard.setAttribute('tabindex', '-1')
+        scoreBoard.addEventListener('focus', focus, true)
+        }  
+    })
 }
 
 function sortDiceTally (arr){
@@ -181,9 +315,7 @@ function scoreParse (scoreOptions){
         return a + b;
         }, 0);
      
-    scoreCardTally = {
-
-    }
+    scoreCardTally = { }
     
     //FOR EACH loop to validate scoreing options.  for 3, 4, and 5 of a kinds.  Did not use if/else if since 
     //a 5 of a kind can also be a 3 or 4 of a kind, a 4 of a kind can also be a 3 of a kind.
@@ -193,22 +325,16 @@ function scoreParse (scoreOptions){
         
         //Check for 5 of a Kind AKA Yahtzee
         if (number >= 5){
-            // console.log(index)
-            // console.log(number)
             scoreCardTally.yahtzee = 50
             console.log('YAHTZEE', ((index + 1) * number))
         } 
         //Check for 4 of a kind
         if (number >= 4){
-            // console.log(index)
-            // console.log(number)
             scoreCardTally.fourOfKind = sum
             console.log('You can take a 4 of Kind', sum)
         } 
         //Check for 3 of a kind
         if (number >= 3){
-            // console.log(index)
-            // console.log(number)
             scoreCardTally.threeOfKind = sum
             console.log('You can take a 3 of Kind', sum)
         }
@@ -230,15 +356,16 @@ function scoreParse (scoreOptions){
             straightCheck += 1
         } 
     }
-    if(straightCheck === 3){
+    if(straightCheck >= 3){
         scoreCardTally.smallStraight = 30
         console.log("Small straight Scores 30 Points")
-    } else if (straightCheck === 4){
+    }  
+    if(straightCheck === 4){
         scoreCardTally.largeStraight = 40
         console.log("Large Straight Score 40 Points")
     }
     let chance = sum
-        scoreCardTally.chance = sum    
+        scoreCardTally.chance = chance    
     console.log(`You can take ${sum} on Chance`)
 
     console.log("Score Card Tally:", scoreCardTally)

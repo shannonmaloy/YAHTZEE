@@ -21,10 +21,10 @@
           <img id='yahtzeeImage' src='./yahtzee-small.png' alt='Yahtzee'>
       </div> 
       <div class='playerScoreContainer'>  
-          <div class='playerScore1'><p class='player1Score'>0</p> <p class='playerTitle'>Player 1</p></div>
-          <div class='playerScore2'><p class='player2Score'>0</p> <p class='playerTitle'>Player 2</p></div>
-          <div class='playerScore3'><p class='player3Score'>0</p> <p class='playerTitle'>Player 3</p></div>
-          <div class='playerScore4'><p class='playe4Score'>0</p> <p class='playerTitle'>Player 4</p></div>
+          <div class='playerScore1'><p id='player1Score'>0</p> <p class='playerTitle'>Player 1</p></div>
+          <div class='playerScore2'><p id='player2Score'>0</p> <p class='playerTitle'>Player 2</p></div>
+          <div class='playerScore3'><p id='player3Score'>0</p> <p class='playerTitle'>Player 3</p></div>
+          <div class='playerScore4'><p id='player4Score'>0</p> <p class='playerTitle'>Player 4</p></div>
       </div>    
     </div> 
       <div class="scoreCardContainer">
@@ -58,10 +58,10 @@
                             <div class = 'right'><span class = 'diceItem'>6</span> = 6</div>
                           </div>
                           
-                          <div id='bonus'class="scoreMethods">BONUS = + 35 </div>        
+                          <div id='bonus'class="scoreMethods">BONUS (35 Points) <span class="tooltiptext">If Total Above Is 63 Or Over: Bonus 35 Points</span></div>        
                 </div>
               
-                <div class='playerColumn'>
+                <div class='playerColumn1'>
                           <div class="player">Player 1</div>
                           <div class= '1'></div>
                           <div class= '2'></div>
@@ -71,7 +71,7 @@
                           <div class= '6'></div>
                           <div class= 'bonus'></div>
                 </div>
-                <div class='playerColumn'>
+                <div class='playerColumn2'>
                           <div class="player">Player 2</div>
                           <div class= '1'></div>
                           <div class= '2'></div>
@@ -81,7 +81,7 @@
                           <div class= '6'></div>
                           <div class= 'bonus'></div>
                 </div>  
-                <div class='playerColumn 3'>
+                <div class='playerColumn3'>
                           <div class="player">Player 3</div>
                           <div class= '1'></div>
                           <div class= '2'></div>
@@ -91,7 +91,7 @@
                           <div class= '6'></div>
                           <div class= 'bonus'></div>
                 </div>
-                <div class='playerColumn 4'>
+                <div class='playerColumn4'>
                           <div class="player">Player 4</div>
                           <div class= '1'></div>
                           <div class= '2'></div>
@@ -105,17 +105,17 @@
               
             <div class='lowerScoreSection'>
                 <div class ='scoreOptionsColumn'>
-                            <div id='upperSection'class="scoreMethods"></div>
-                            <div id='ones' class= 'scoreMethods'>3 Of A Kind<span class="tooltiptext">Total Of All Dice</span></div>
-                            <div id='twos'class="scoreMethods">4 Of A Kind<span class="tooltiptext">Total Of All Dice</span></div>
-                            <div id='three'class="scoreMethods">Full House<span class="tooltiptext">3 Of A Kind & A Pair</span></div>
-                            <div id='fours'class="scoreMethods">Small Straight<span class="tooltiptext">Sequence of 4</span></div>
-                            <div id='fives'class="scoreMethods">Large Straight<span class="tooltiptext">Sequence of 5</span></div>
-                            <div id='sixes'class="scoreMethods">YAHTZEE<span class="tooltiptext">5 Of A Kind</span></div>
+                            <div id='lowerSection'class="scoreMethods"></div>
+                            <div class= 'scoreMethods'>3 Of A Kind<span class="tooltiptext">Total Of All Dice</span></div>
+                            <div class="scoreMethods">4 Of A Kind<span class="tooltiptext">Total Of All Dice</span></div>
+                            <div class="scoreMethods">Full House<span class="tooltiptext">3 Of A Kind + A Pair - Scores 25</span></div>
+                            <div class="scoreMethods">Small Straight<span class="tooltiptext">Sequence of 4 - Score 30</span></div>
+                            <div class="scoreMethods">Large Straight<span class="tooltiptext">Sequence of 5 - Scores 40</span></div>
+                            <div class="scoreMethods">YAHTZEE<span class="tooltiptext">5 Of A Kind - Scores 50</span></div>
                             <div id='upperSubtotal'class="scoreMethods">Chance<span class="tooltiptext">Total Of All Dice</span></div>
                 </div>
                    
-                <div class='playerColumn'>
+                <div class='playerColumn1'>
                             <div class="player">Player 1</div>
                             <div class= 'threeOfKind'></div>
                             <div class= 'fourOfKind'></div>
@@ -125,7 +125,7 @@
                             <div class= 'yahtzee'></div>
                             <div class= 'chance'></div>                 
                 </div>
-                <div class='playerColumn'>
+                <div class='playerColumn2'>
                               <div class="player">Player 2</div>
                               <div class= 'threeOfKind'></div>
                             <div class= 'fourOfKind'></div>
@@ -135,7 +135,7 @@
                             <div class= 'yahtzee'></div>
                             <div class= 'chance'></div>   
                 </div>  
-                <div class='playerColumn'>
+                <div class='playerColumn3'>
                               <div class="player">Player 3</div>
                               <div class= 'threeOfKind'></div>
                             <div class= 'fourOfKind'></div>
@@ -145,7 +145,7 @@
                             <div class= 'yahtzee'></div>
                             <div class= 'chance'></div>  
                 </div>
-                <div class='playerColumn'>
+                <div class='playerColumn4'>
                               <div class="player">Player 4</div>
                               <div class= 'threeOfKind'></div>
                             <div class= 'fourOfKind'></div>
@@ -171,7 +171,7 @@
         </div>
 
         <div class='game-info-container'>
-            <div class="game-info">GAME STATUS HERE</div>
+            <div class="game-info">Welcome To Yahtzee!    Press Start to Begin!</div>
            
         </div>
 
@@ -189,8 +189,8 @@
   <!-- Modal content -->
   <form id='numberOfPlayersForm' class="modal-content">
     <span class="close">&times;</span>
-    <p>Welcome To Yahtzee!</p> <p>How Many Players?</p>
-    <input type='number' name='numberOfPlayers' placeholder='1 - 4 Players' value='' max='4' required />
+    <p1>Welcome To Yahtzee!</p1><br> <p2>How Many Players?</p2><br>
+    <input type='number' name='numberOfPlayers' placeholder='1 - 4 Players' value='' min='1' max='4' required />
     <input type='submit' name='numberOfPlayersSubmit' placeholder='1 - 4 Players' value='Submit'/>
   </form>
 
