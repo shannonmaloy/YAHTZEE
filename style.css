@@ -496,6 +496,17 @@
 
     .modal-content, input[type=submit], input[type=number] {
         border: 2px solid black;
-       
+        padding: 5px 10px;
+        
     }
+
+    input[type=submit], input[type=number] {
+        margin: 2px 0;
+        
+    }
+
+    input[type=submit] {
+        font-size: 3vw;
+    }
+
   }

@@ -75,7 +75,7 @@ startAndRollButton.addEventListener('click',evt =>{
 
 //Dice Sound
 function playAudio() {
-    sound.src = './DiceRoll3.mp3'
+    sound.src = './DiceRoll3.m4a'
     sound.volume = 0.3;
     sound.play().volume;
 }
