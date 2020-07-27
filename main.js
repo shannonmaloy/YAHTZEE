@@ -241,7 +241,7 @@ takeScore.addEventListener('click', evt =>{
      gameRollCount -= 1
      console.log(gameRollCount === 0)
      console.log(currentPlayer == playerNumber)
-     if (gameRollCount === 44 && currentPlayer == playerNumber){
+     if (gameRollCount === 0 && currentPlayer == playerNumber){
         return determineWinner()
      }
      if (currentPlayer < playerNumber){
