@@ -14,6 +14,7 @@ let playerNumber = 1
 let pressStart = null
 let playerScoreKeeper = []
 let bonusCheck = null
+let gameRollCount = 0
 
 //Query for the dice
 const dice = document.querySelectorAll('.dice')
@@ -65,10 +66,12 @@ startAndRollButton.addEventListener('click',evt =>{
             modal.style.display = "none";
             form.reset()
             pressStart.innerText = `Roll (${rollCount})`
+            gameRollCount = playerNumber * 13
             gameSetup(playerNumber)
         })   
     }  
 })
+
 
 //Dice Sound
 function playAudio() {
@@ -104,10 +107,12 @@ function gameSetup(playerNumber){
     highlight()
 }
 
+//Rotates the game info bar to indicate current player's turn
 function currentPlayerMessage(){
-    gameInfoBar.innerText = `Player ${currentPlayer}'s Turn!`
+    gameInfoBar.innerText = `Player ${currentPlayer}'s Turn!  Click the Roll Button`
 }
 
+//highlights the current players column and score div
 function highlight (){
     let highlightColumn = document.querySelectorAll(`.playerColumn${currentPlayer}`)
         highlightColumn.forEach(highlightColumn =>{
@@ -118,6 +123,7 @@ function highlight (){
     highlightPlayerScore.className = 'currentPlayerHighlightScore'
 }
 
+//unhlighlists the current player
 function unhighlight (){
     let highlightColumn = document.querySelectorAll(`.playerColumnHighlightCurrent`)
         highlightColumn.forEach(highlightColumn =>{
@@ -128,6 +134,7 @@ function unhighlight (){
     highlightPlayerScore.className = `playerScore${currentPlayer}`
 }
 
+//rolls the dice upon the Start/Roll button being clicked
 function rollDice(){  
     //Sound effect for dice roll
     playAudio() 
@@ -146,56 +153,18 @@ function rollDice(){
             //Create an array of what was rolled
             diceRollResult[i] = diceRoll
             }  
-    // console.log(diceRollResult, turnDiceSelection)
     })
 
     sortDiceTally(diceRollResult) //Returns scoreOptons object
     
-    scoreParse(scoreOptions) 
+    scoreParse(scoreOptions) //determines all of the valid score options available to the player based on the current roll
     
-    scoreBoardListener(scoreCardTally)
+    scoreBoardListener(scoreCardTally) //listens for the current players scoring column to be clicked
 
-    takeScore.addEventListener('click', evt =>{
-        console.log(selectedScore >= 0)
-        if (selectedScore === null){
-            gameInfoBar.innerText = "Select A Score Option Above, Then Select 'Take Score'"
-            return
-        }
-        let currentPlayClass = clickedItem.className
-        playerScoreKeeper[currentPlayer - 1][currentPlayClass] = selectedScore
-        console.log(playerScoreKeeper)
-        clickedItem.innerText = selectedScore
-        clickedItem.className = 'scored'
-        bonusChecker()
-        
-        //Check for bonus BEFORE the unlight function and the score pull below
-        unhighlight()
-        let scorePull = Object.values(playerScoreKeeper[currentPlayer - 1])
-        console.log(scorePull)
-        let updatePlayerScore = scorePull.reduce(function( a , b){
-        return a + b;
-        }, 0);
-        console.log(updatePlayerScore)
-        document.getElementById(`player${currentPlayer}Score`).innerHTML = updatePlayerScore
-        rollCount = 3
-        pressStart.innerText = `Roll (${rollCount})`
-        dice.forEach(dice  => { 
-            dice.setAttribute('class','dice')
-            turnDiceSelection = []
-        })
-        selectedScore = null
-        if (currentPlayer < playerNumber){
-            currentPlayer += 1
-        } else {currentPlayer = 1}
-        highlight()
-        currentPlayerMessage()
-        scoreBoard.forEach(scoreBoard =>{
-            removeFocusAndBlur(scoreBoard)
-        })
-    })
-
+  
 }
 
+//This function checks the current player's scores for the "upper section" only.  If above 63 player is granted a 35 point bonus
 function bonusChecker(){
     //Implemented solution from https://stackoverflow.com/questions/15748656/javascript-reduce-on-object
     let bonusCheck = playerScoreKeeper[currentPlayer - 1]
@@ -219,12 +188,10 @@ function bonusChecker(){
         playerScoreKeeper[currentPlayer - 1].bonus = bonusAmount
         document.querySelector('.playerColumnHighlightCurrent .bonus').innerText = bonusAmount
     }
-
-
 }
 
 
-
+//Adds event listener to the dice
 dice.forEach((dice,i) => {
     dice.addEventListener('click', (evt) =>{
         if (diceRollResult[i] !== undefined ){
@@ -232,7 +199,6 @@ dice.forEach((dice,i) => {
                 //CHANGE CSS CLASS ON CLICK
                 dice.setAttribute('class','dice-clicked')
                 turnDiceSelection[i] = diceRollResult[i]
-                
             } else {
                 turnDiceSelection[i] = undefined
                 //CHANGE CSS CLASS ON CLICK
@@ -243,6 +209,81 @@ dice.forEach((dice,i) => {
     })
 })
 
+takeScore.addEventListener('click', evt =>{
+    console.log(playerScoreKeeper)
+     if (selectedScore === null){
+         gameInfoBar.innerText = "Select A Score Option Above, Then Select 'Take Score'"
+         return
+     } 
+     let currentPlayClass = clickedItem.className
+     playerScoreKeeper[currentPlayer - 1][currentPlayClass] = selectedScore
+     clickedItem.innerText = selectedScore
+     clickedItem.className = 'scored'
+     bonusChecker() //checks to determine if the player's current score meets the bonus score threshold
+     
+     unhighlight()
+     //Determine the current player's score and update the appropriate score board
+     let scorePull = Object.values(playerScoreKeeper[currentPlayer - 1])
+     let updatePlayerScore = scorePull.reduce(function(a , b){
+         return a + b;
+         }, 0);
+     document.getElementById(`player${currentPlayer}Score`).innerHTML = updatePlayerScore
+     
+     //reset conditions for the next player
+     rollCount = 3
+     pressStart.innerText = `Roll (${rollCount})`
+     dice.forEach(dice  => { 
+         dice.setAttribute('class','dice')
+         turnDiceSelection = []
+     })
+     selectedScore = null
+     
+     gameRollCount -= 1
+     console.log(gameRollCount === 0)
+     console.log(currentPlayer == playerNumber)
+     if (gameRollCount === 44 && currentPlayer == playerNumber){
+        return determineWinner()
+     }
+     if (currentPlayer < playerNumber){
+         currentPlayer += 1
+     } else {currentPlayer = 1}
+     highlight()
+     currentPlayerMessage()
+     scoreBoard.forEach(scoreBoard =>{
+         removeFocusAndBlur(scoreBoard)
+         
+     })
+     
+     
+
+ })
+
+function determineWinner(){
+    let max = 0
+    let maxIndex = 0
+    for(i = 0; i < playerScoreKeeper.length; i++){
+        
+        let scorePull2 = Object.values(playerScoreKeeper[i])
+        let winner = scorePull2.reduce(function(a , b){
+         return a + b;
+         }, 0);
+        if (winner > max){
+            max = winner
+            maxIndex = i + 1
+        } else if (winner === max){
+            winnerMessage = 'Tie Game!  No Winner!'
+            { break; }
+        }
+        winnerMessage = `Player ${maxIndex} Wins!`
+    }
+    let getWinner = document.querySelector('#winnerOfGame p2')
+    getWinner.innerText = winnerMessage
+    modal2.style.display = "block";
+        const form = document.querySelector('#winnerOfGame')
+        form.addEventListener('submit', evt =>{
+            location.reload()
+        }) 
+}
 
 function removeFocusAndBlur(scoreBoard) {
     scoreBoard.removeEventListener('focus', focus, true)
@@ -260,8 +301,6 @@ function focus(evt){
             } else {
                 evt.target.innerText = scoreCardTally[clickedScoreBoardItem]
                 selectedScore = scoreCardTally[clickedScoreBoardItem]
-                console.log(selectedScore)
-                console.log(clickedItem)
             }      
                 evt.target.addEventListener('blur', blur, true)
         }
@@ -270,19 +309,12 @@ function focus(evt){
 
 function blur(evt) {
     evt.target.innerText = null 
-    console.log(selectedScore)
-    console.log(clickedItem)
 } 
 
-
+//Function to listen for clicks on the score board.  When a user clicks it should show the score available to them based on the current roll
 function scoreBoardListener(){
-    
     scoreBoard = document.querySelectorAll('.playerColumnHighlightCurrent div:not(.bonus)')
-    console.log(scoreBoard)
-    console.log('enter')
     scoreBoard.forEach((scoreBoard) => {
-        console.log(scoreBoard.innerText)
-
         if (scoreBoard.innerText === ''){
         scoreBoard.setAttribute('tabindex', '-1')
         scoreBoard.addEventListener('focus', focus, true)
@@ -304,9 +336,7 @@ function sortDiceTally (arr){
         }
     return scoreOptions
 }
-//End sortDiceTally function
 
-//************************************************** */
 //Function to evaluate all scoring options based on the current dice roll
 function scoreParse (scoreOptions){
     let score = Object.values(scoreOptions)
@@ -317,26 +347,22 @@ function scoreParse (scoreOptions){
      
     scoreCardTally = { }
     
-    //FOR EACH loop to validate scoreing options.  for 3, 4, and 5 of a kinds.  Did not use if/else if since 
+    //FOR EACH loop to validate scoring options.  for 3, 4, and 5 of a kinds.  Did not use if/else if since 
     //a 5 of a kind can also be a 3 or 4 of a kind, a 4 of a kind can also be a 3 of a kind.
     score.forEach((number,index) => {       
         scoreCardTally[index + 1] = score[index] * diceOptions[index]
-        // console.log(`You can take ${score[index] * diceOptions[index]} on your ${diceOptions[index]}'s`)
         
         //Check for 5 of a Kind AKA Yahtzee
         if (number >= 5){
             scoreCardTally.yahtzee = 50
-            console.log('YAHTZEE', ((index + 1) * number))
         } 
         //Check for 4 of a kind
         if (number >= 4){
             scoreCardTally.fourOfKind = sum
-            console.log('You can take a 4 of Kind', sum)
         } 
         //Check for 3 of a kind
         if (number >= 3){
             scoreCardTally.threeOfKind = sum
-            console.log('You can take a 3 of Kind', sum)
         }
     })
     //Full House Check
@@ -348,8 +374,7 @@ function scoreParse (scoreOptions){
     fullHouse = fullHouse.sort()
     if (fullHouse[0] === 2 && fullHouse[1] === 3){
         scoreCardTally.fullHouse = 25
-        console.log('Full House Scores 25 points')}
-     
+    }
     //Large and Small Straights Check
     for (let i = 0; i < score.length - 1; i++){
         if ( score[i+1] >= 1 && score[i] >= 1){
@@ -358,22 +383,18 @@ function scoreParse (scoreOptions){
     }
     if(straightCheck >= 3){
         scoreCardTally.smallStraight = 30
-        console.log("Small straight Scores 30 Points")
     }  
     if(straightCheck === 4){
         scoreCardTally.largeStraight = 40
-        console.log("Large Straight Score 40 Points")
     }
     let chance = sum
         scoreCardTally.chance = chance    
-    console.log(`You can take ${sum} on Chance`)
 
-    console.log("Score Card Tally:", scoreCardTally)
+    // console.log("Score Card Tally:", scoreCardTally)
     return scoreCardTally
 }
+
 ///End Score Parse Function
-
-
 
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -381,12 +402,11 @@ var modal = document.getElementById("myModal");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal
-
-
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
 }
 
+// Get the modal
+var modal2 = document.getElementById("myModal2");
 
