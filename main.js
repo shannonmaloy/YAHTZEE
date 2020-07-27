@@ -210,7 +210,6 @@ dice.forEach((dice,i) => {
 })
 
 takeScore.addEventListener('click', evt =>{
-    console.log(playerScoreKeeper)
      if (selectedScore === null){
          gameInfoBar.innerText = "Select A Score Option Above, Then Select 'Take Score'"
          return
@@ -239,8 +238,6 @@ takeScore.addEventListener('click', evt =>{
      selectedScore = null
      
      gameRollCount -= 1
-     console.log(gameRollCount === 0)
-     console.log(currentPlayer == playerNumber)
      if (gameRollCount === 0 && currentPlayer == playerNumber){
         return determineWinner()
      }
@@ -253,9 +250,6 @@ takeScore.addEventListener('click', evt =>{
          removeFocusAndBlur(scoreBoard)
          
      })
-     
-     
-
  })
 
 function determineWinner(){
@@ -304,7 +298,6 @@ function focus(evt){
             }      
                 evt.target.addEventListener('blur', blur, true)
         }
-
 }
 
 function blur(evt) {

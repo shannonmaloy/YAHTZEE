@@ -98,29 +98,7 @@ background-color: #18558a;
     border-radius: 10px;
     margin: 5px;
     }
-
-    .rolled {
-        width: 7vw;
-        height: 7vw;
-        font-family: 'diceFont';
-        color: black;
-        background-color: whitesmoke;
-        font-size: 9vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        border-radius: 10px;
-        margin: 5px;
-        animation: swing;
-        animation-duration: 2s;
-        perspective: 600px;
-        transition: transform 1.5s ;
-        transform-style: preserve-3d;
-        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-    }
-
-    
+  
     .gameBoard {
         font-family: 'yahtzee', cursive;
         font-size: 1.1vw;
@@ -139,7 +117,6 @@ background-color: #18558a;
 
     .scoreCardContainer {
         display: grid;
-
         border-radius: 15px;
         grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.5fr);
         grid-column-gap: 0;
