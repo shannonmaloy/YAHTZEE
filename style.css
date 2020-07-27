@@ -450,7 +450,9 @@ background-color: #18558a;
  
 
   @media only screen and (max-width: 800px) {
-    
+    .gameBoard{
+        padding:5px 5px;
+    }
     .take-score{
         max-height: 49px;
     }
@@ -460,10 +462,11 @@ background-color: #18558a;
      
     }
     .scoreOptionsColumn, [class *= 'playerColumn']{
-        grid-template-rows: auto repeat(7,4vw);
+        grid-template-rows: auto repeat(7,4.5vw);
     }
     .scoreMethods2, .scoreMethods{
         align-content: center;
+        font-size: 2.7vw;
     }
     .gameBoard, .playerScoreContainer div, .roll, .take-score, .game-info, .currentPlayerHighlightScore{
         border: 2px solid black;
@@ -475,6 +478,18 @@ background-color: #18558a;
         padding: unset
     }
     .take-score,.roll{
-        margin: unset
+        margin: unset;
+        font-size: 3.5vw;
+    }
+    
+    [class*='playerColumn'] div {
+      font-size: 3vw;
+    }
+    .game-info{
+        font-size: 3.5vw;
+        text-align: center;
+    }
+    .scoreMethods{
+        padding: 0 3px;
     }
   }
