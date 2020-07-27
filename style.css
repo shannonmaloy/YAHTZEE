@@ -481,6 +481,7 @@
         margin: unset;
         font-size: 3.0vw;
         max-height: 46px;
+        align-items: center;
     }
     
     [class*='playerColumn'] div {
