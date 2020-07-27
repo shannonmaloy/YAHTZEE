@@ -479,7 +479,8 @@ background-color: #18558a;
     }
     .take-score,.roll{
         margin: unset;
-        font-size: 3.5vw;
+        font-size: 3.0vw;
+        max-height: 46px;
     }
     
     [class*='playerColumn'] div {
