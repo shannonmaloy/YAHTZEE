@@ -237,7 +237,7 @@
         cursor: pointer;
         border-radius: 8px;
         margin: 0 30px;
-        max-height: 60px;
+        /* max-height: 60px; */
     }
     .game-info {
         width: 50%;
